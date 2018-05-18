@@ -1,3 +1,5 @@
+
+
 //Define UI vars
 const form = document.querySelector('#task-form');
 const taskList = document.querySelector('.collection');
@@ -99,12 +101,21 @@ function storeTaskInLocalStorage(task) {
 function removeTask(e) {
   if(e.target.parentElement.classList.contains('delete-item')) {
     e.target.parentElement.parentElement.remove();
+    let tasks = JSON.parse(localStorage.getItem('tasks'));
+    if(localStorage.getItem('tasks') === null) {
+      tasks = [];
+    } else {
+      tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+    tasks.splice(tasks.indexOf(e.target.parentElement.parentElement.textContent), 1);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   }
 }
 
 function clearTasks(e) {
   if(e.target.classList.contains('clear-tasks')) {
     document.querySelectorAll('ul.collection .collection-item').forEach((item) => item.remove());
+    localStorage.clear();
   }
 }
 
@@ -120,3 +131,12 @@ function filtertasks(e) {
     }
   });
 }
+
+
+function load() {
+  var mydata = JSON.parse(data);
+  alert(mydata[0].name);
+  console.log(mydata[0].age);
+}
+
+load();
